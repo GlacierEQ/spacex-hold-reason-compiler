@@ -2,21 +2,61 @@
   "schema": "glaciereq.repo-target-contract.v1",
   "identity": {
     "repository_id": "GlacierEQ/spacex-hold-reason-compiler",
-    "family": "elite-estate"
+    "family": "structured_hold_explanation"
   },
   "current": {
     "state": "PROMOTED",
     "implemented": true,
     "tested": true,
-    "deployed": false
+    "deployed": false,
+    "canonical_position_pending_exact_head_proof": true
   },
-  "nonclaims": [
-    "no employer affiliation",
-    "no production deployment without receipt"
+  "target": {
+    "purpose": "Compile supplied hold residuals into one deterministic, policy-bound human+machine explanation without losing codes, ownership, severity, tied details, or unknown subsystems.",
+    "central_bottleneck": "Operational hold evidence becomes ambiguous when duplicate residuals are order-dependent, malformed severity/identity values are accepted, or the prioritization policy behind the primary reason is not bound into the receipt.",
+    "success": [
+      "Malformed residual identities/details/severity refuse.",
+      "Highest severity wins per subsystem/code.",
+      "Equal highest-severity duplicate details are preserved deterministically.",
+      "Severity precedes subsystem priority and ties are deterministic.",
+      "Unknown subsystems remain visible as unassigned.",
+      "Policy fingerprint is bound into the complete machine brief receipt.",
+      "The compiler never claims hold-clearance or flight-decision authority."
+    ]
+  },
+  "invariants": [
+    "machine-safe non-empty subsystem/code identity",
+    "non-empty detail",
+    "severity must be LOW HIGH or CRITICAL",
+    "duplicate resolution is input-order independent",
+    "unknown subsystems are visible not dropped",
+    "policy identity is receipt-bound",
+    "terminal fingerprint binds the complete machine brief",
+    "no clearance or actuation authority"
   ],
   "donor_plan": {
-    "mode": "none",
-    "donors": []
+    "status": "RESOLVED",
+    "strategy": "INDEPENDENT_MECHANISM_PRESERVED",
+    "donors": [
+      {
+        "repository": "GlacierEQ/spacex-mission-thread-quorum",
+        "reuse_mode": "REFERENCE_ARCHITECTURE",
+        "boundary": "future mission decision receipts may be cited by hold explanations, but no exercised integration exists yet"
+      }
+    ]
   },
-  "frozen_at": "2026-08-10T04:12Z"
+  "promotion": {
+    "required_tests": ["python-unit", "python-adversarial", "canonical-position"],
+    "require_exact_source_sha": true,
+    "require_receipt": true,
+    "require_nonclaims": true,
+    "next_gate": "CANONICAL_POSITION_RESOLVED"
+  },
+  "nonclaims": [
+    "no SpaceX affiliation",
+    "not a production launch-control system",
+    "does not decide or clear launch holds",
+    "does not authenticate upstream residuals or actuate hardware",
+    "no exercised integration with spacex-mission-thread-quorum"
+  ]
 }
