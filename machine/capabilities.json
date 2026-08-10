@@ -1,1 +1,14 @@
-{"capabilities": ["hyper-scaling"]}
+{
+  "schema": "glaciereq.repo-capabilities.v1",
+  "repository": "GlacierEQ/spacex-hold-reason-compiler",
+  "family": "structured_hold_explanation",
+  "capabilities": [
+    "deterministic_hold_residual_deduplication",
+    "severity_priority_hold_ranking",
+    "hold_policy_fingerprint",
+    "unknown_subsystem_visibility",
+    "machine_safe_hold_identity_validation",
+    "complete_hold_brief_receipt"
+  ],
+  "truth_boundary": "Structured explanation compiler only. It does not authenticate residuals, decide flight safety, clear holds, issue go/no-go authority, actuate hardware, run SpaceX operations, or claim SpaceX adoption."
+}
