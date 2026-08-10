@@ -1,0 +1,57 @@
+{
+  "schema": "glaciereq.repo-canonical-position.v1",
+  "repository": "GlacierEQ/spacex-hold-reason-compiler",
+  "position_state": "RESOLVED",
+  "role": "CANONICAL_SPECIALIST",
+  "company_target": "SpaceX",
+  "canonical_identity": "hold-reason-compiler",
+  "owns": "deterministic_structured_hold_explanation",
+  "unique_value": [
+    "explicit subsystem residuals compile into one deterministic human+machine hold brief",
+    "equal subsystem/code duplicates keep highest severity and deterministically preserve all tied highest-severity details",
+    "severity and subsystem priority policy are explicit and receipt-bound",
+    "unknown subsystems remain visible as UNASSIGNED rather than disappearing",
+    "malformed subsystem/code/detail/severity inputs refuse before a brief is emitted",
+    "the terminal fingerprint binds the complete machine brief including policy identity"
+  ],
+  "does_not_own": [
+    "flight safety/go-no-go decision authority",
+    "hold clearance or hardware actuation",
+    "authentication of upstream residuals",
+    "mission-thread quorum/command authorization",
+    "SpaceX launch operations"
+  ],
+  "capability_contribution": {
+    "family": "structured_hold_explanation",
+    "extractable_mechanisms": [
+      "deterministic_hold_residual_deduplication",
+      "severity_priority_hold_ranking",
+      "hold_policy_fingerprint",
+      "unknown_subsystem_visibility",
+      "machine_safe_hold_identity_validation",
+      "complete_hold_brief_receipt"
+    ],
+    "ownership": "Canonical SpaceX-lens specialist for deterministic structured hold explanation, separate from mission decision authority."
+  },
+  "relationships": [
+    {
+      "repository": "GlacierEQ/spacex-mission-thread-quorum",
+      "relation": "COMPOSES_WITH",
+      "integration_exercised": false,
+      "boundary": "mission-thread quorum/authority is separate from compilation of supplied hold reasons"
+    }
+  ],
+  "next_evolution": "Bind authenticated upstream residual receipts and mission-thread decision receipts, preserve source freshness, and prove end-to-end explanation/readback without granting this compiler clearance authority.",
+  "evidence_refs": [
+    "src/hold_compiler.py",
+    "tests/test_hold_compiler.py",
+    "ISSUE_CONTRACT.md",
+    "machine/target-contract.json"
+  ],
+  "nonclaims": [
+    "no SpaceX affiliation",
+    "not a production launch-control system",
+    "does not issue or clear holds",
+    "no exercised integration with spacex-mission-thread-quorum"
+  ]
+}
