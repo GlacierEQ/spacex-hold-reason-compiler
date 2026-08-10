@@ -1,0 +1,26 @@
+{
+  "schema": "glaciereq.operability-receipt.v1",
+  "repository": "GlacierEQ/spacex-hold-reason-compiler",
+  "at": "2026-08-10T04:12Z",
+  "source_sha": "3962c925cfb61f3c07c8e8891746225d239450186ab7b968a57435293b58e5d1",
+  "entry": "scripts/operate.py",
+  "primary_output": {
+    "module": "hold_compiler",
+    "ok": true,
+    "repository": "GlacierEQ/spacex-hold-reason-compiler",
+    "smoke": {
+      "args": [
+        "[HoldResidual(subsystem='sample_subsyste"
+      ],
+      "content_checked": true,
+      "invoked": true,
+      "kind": "class",
+      "method": "compile",
+      "module_local": true,
+      "name": "HoldReasonCompiler",
+      "result": "HoldBrief(headline='HOLD(1): sample_subsystem:sample_code', machine_codes=('sample_subsystem:sample_code',), owners=('sample_subsystem',), narrative='sample_subsystem [sample_code/HIGH] sample_detail', primary='sample_subsystem:sample_code', machine={'state': 'HOLD', 'primary': 'sample_subsystem:sample_code', 'codes': ['sample_subsystem:sample_code'], 'owners': ['sample_subsystem'], 'residuals': [{'subsystem': 'sample_subsystem', 'code': 'sample_code', 'severity': 'HIGH', 'detail': 'sample_detail'}]}, fingerprint='5aebb28e6dd9f6cde0def5403cc9e75b929dd318418e4134991fe7ae4d8ef0fb')"
+    }
+  },
+  "dual_run_ok": true,
+  "result": "PASS"
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "glaciereq.promotion-authority-grant.v1",
+  "repository": "GlacierEQ/spacex-hold-reason-compiler",
+  "source_sha": "3962c925cfb61f3c07c8e8891746225d239450186ab7b968a57435293b58e5d1",
+  "proof_receipt_digest": "1cde8f3f58a45602de5e979c9d467806a08b1a6472e0d61eb7e83e6e3014280b",
+  "not_after": 1788927149.234226,
+  "mac": "bc74e570ae1fdbf88958711ad6134c0d569fd2d5d3457338b9dc69c3f017905e",
+  "issuer": "local_operator_promotion_authority",
+  "verified": true,
+  "secret_ref": "src/promotion_authority.py::LOCAL_OPERATOR_SECRET"
+}
