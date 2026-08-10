@@ -5,11 +5,11 @@
     "family": "structured_hold_explanation"
   },
   "current": {
-    "state": "PROMOTED",
+    "state": "EVOLVING",
     "implemented": true,
     "tested": true,
     "deployed": false,
-    "canonical_position_pending_exact_head_proof": true
+    "canonical_position_pending_exact_head_proof": false
   },
   "target": {
     "purpose": "Compile supplied hold residuals into one deterministic, policy-bound human+machine explanation without losing codes, ownership, severity, tied details, or unknown subsystems.",
@@ -50,7 +50,11 @@
     "require_exact_source_sha": true,
     "require_receipt": true,
     "require_nonclaims": true,
-    "next_gate": "CANONICAL_POSITION_RESOLVED"
+    "next_gate": "EVOLUTION_CURSOR_DEFINED"
+  },
+  "evolution": {
+    "cursor": "next:authenticated_residual_receipts_and_source_freshness_then_mission_decision_receipt_binding",
+    "composition_gate": "Do not bind mission-thread quorum as integrated authority until receipt-level composition is implemented and reproduced."
   },
   "nonclaims": [
     "no SpaceX affiliation",
