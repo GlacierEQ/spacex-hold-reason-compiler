@@ -2,7 +2,7 @@
 
 The bridge verifies the serialized producer receipt independently, then converts
 non-GO evidence into ordinary HoldResidual objects. The core hold compiler remains
-unchanged and therefore stays the single owner of dedupe/priority/rendering logic.
+the single owner of dedupe, priority, and rendering behavior.
 """
 from __future__ import annotations
 
@@ -142,6 +142,16 @@ def verify_quorum_receipt(receipt: Mapping[str, Any]) -> tuple[bool, str | None]
     return True, None
 
 
+def _residual(subsystem: str, code: str, severity: str, detail: str) -> HoldResidual:
+    """Use named fields so producer/consumer evolution cannot silently reorder meaning."""
+    return HoldResidual(
+        subsystem=subsystem,
+        code=code,
+        detail=detail,
+        severity=severity,
+    )
+
+
 def residuals_from_quorum(receipt: Mapping[str, Any]) -> list[HoldResidual]:
     ok, reason = verify_quorum_receipt(receipt)
     if not ok:
@@ -151,18 +161,18 @@ def residuals_from_quorum(receipt: Mapping[str, Any]) -> list[HoldResidual]:
     out: list[HoldResidual] = []
 
     for subsystem in receipt["stale_subsystems"]:
-        out.append(HoldResidual(subsystem, "QUORUM_STALE", "HIGH", f"mission-thread vote stale at t={now}; source_receipt={source}"))
+        out.append(_residual(subsystem, "QUORUM_STALE", "HIGH", f"mission-thread vote stale at t={now}; source_receipt={source}"))
     for subsystem in receipt["future_subsystems"]:
-        out.append(HoldResidual(subsystem, "QUORUM_FUTURE", "HIGH", f"mission-thread vote is future-dated at t={now}; source_receipt={source}"))
+        out.append(_residual(subsystem, "QUORUM_FUTURE", "HIGH", f"mission-thread vote is future-dated at t={now}; source_receipt={source}"))
     never_seen = [s for s in receipt["missing_subsystems"] if s not in receipt["stale_subsystems"] and s not in receipt["future_subsystems"]]
     for subsystem in never_seen:
-        out.append(HoldResidual(subsystem, "QUORUM_MISSING", "HIGH", f"mission-thread vote missing at t={now}; source_receipt={source}"))
+        out.append(_residual(subsystem, "QUORUM_MISSING", "HIGH", f"mission-thread vote missing at t={now}; source_receipt={source}"))
 
     for subsystem, raw in receipt["live_votes"].items():
         if raw["vote"] == "NO_GO":
-            out.append(HoldResidual(subsystem, raw["reason_code"], raw["severity"], f"mission-thread NO_GO at t={now}; source_receipt={source}"))
+            out.append(_residual(subsystem, raw["reason_code"], raw["severity"], f"mission-thread NO_GO at t={now}; source_receipt={source}"))
         elif raw["vote"] == "ABSTAIN":
-            out.append(HoldResidual(subsystem, "QUORUM_ABSTAIN", "HIGH", f"mission-thread abstention at t={now}; source_receipt={source}"))
+            out.append(_residual(subsystem, "QUORUM_ABSTAIN", "HIGH", f"mission-thread abstention at t={now}; source_receipt={source}"))
     return out
 
 
