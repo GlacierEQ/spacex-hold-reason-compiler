@@ -77,6 +77,16 @@ class HoldBrief:
     policy_fingerprint: str
     fingerprint: str
 
+    @property
+    def hold(self) -> bool:
+        """Compatibility view over the canonical machine state."""
+        return self.machine.get("state") == "HOLD"
+
+    @property
+    def reason_count(self) -> int:
+        """Number of canonical residual reasons represented by this brief."""
+        return len(self.machine.get("residuals", ()))
+
 
 class HoldReasonCompiler:
     @staticmethod
@@ -111,10 +121,23 @@ class HoldReasonCompiler:
             unique.append(HoldResidual(subsystem, code, " | ".join(details), severity))
         return unique
 
+    @staticmethod
+    def _reason_row(residual: HoldResidual) -> dict[str, str]:
+        """Portable compatibility projection of one canonical residual."""
+        return {
+            "owner": residual.subsystem,
+            "owner_label": OWNERS.get(residual.subsystem, f"UNASSIGNED:{residual.subsystem}"),
+            "subsystem": residual.subsystem,
+            "code": residual.code,
+            "severity": residual.severity,
+            "detail": residual.detail,
+        }
+
     def compile(self, residuals: Sequence[HoldResidual]) -> HoldBrief:
         if not residuals:
             machine = {
                 "state": "NO_HOLD",
+                "reasons": [],
                 "residuals": [],
                 "policy_fingerprint": POLICY_FINGERPRINT,
             }
@@ -155,20 +178,23 @@ class HoldReasonCompiler:
             f"{residual.subsystem} [{residual.code}/{residual.severity}] {residual.detail}"
             for residual in unique
         )
+        residual_rows = [
+            {
+                "subsystem": residual.subsystem,
+                "code": residual.code,
+                "severity": residual.severity,
+                "detail": residual.detail,
+            }
+            for residual in unique
+        ]
+        reason_rows = [self._reason_row(residual) for residual in unique]
         machine = {
             "state": "HOLD",
             "primary": primary,
             "codes": list(codes),
             "owners": list(owners),
-            "residuals": [
-                {
-                    "subsystem": residual.subsystem,
-                    "code": residual.code,
-                    "severity": residual.severity,
-                    "detail": residual.detail,
-                }
-                for residual in unique
-            ],
+            "reasons": reason_rows,
+            "residuals": residual_rows,
             "policy_fingerprint": POLICY_FINGERPRINT,
         }
         return HoldBrief(
