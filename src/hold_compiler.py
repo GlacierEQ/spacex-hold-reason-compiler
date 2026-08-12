@@ -87,6 +87,11 @@ class HoldBrief:
         """Number of canonical residual reasons represented by this brief."""
         return len(self.machine.get("residuals", ()))
 
+    @property
+    def human(self) -> str:
+        """Historical name for the canonical human-readable narrative."""
+        return self.narrative
+
 
 class HoldReasonCompiler:
     @staticmethod
