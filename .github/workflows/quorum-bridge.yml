@@ -1,0 +1,46 @@
+name: Quorum Hold Bridge
+on:
+  push:
+    paths:
+      - 'src/quorum_bridge.py'
+      - 'tests/test_quorum_bridge.py'
+      - 'scripts/operate_quorum_bridge.py'
+      - '.github/workflows/quorum-bridge.yml'
+  pull_request:
+    paths:
+      - 'src/quorum_bridge.py'
+      - 'tests/test_quorum_bridge.py'
+      - 'scripts/operate_quorum_bridge.py'
+      - '.github/workflows/quorum-bridge.yml'
+permissions:
+  contents: read
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m unittest tests.test_quorum_bridge -v
+
+  cross-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch current Mission Thread Quorum producer
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --quiet --depth=1 https://github.com/GlacierEQ/spacex-mission-thread-quorum.git /tmp/mission-thread-quorum
+          git -C /tmp/mission-thread-quorum rev-parse HEAD
+          test -f /tmp/mission-thread-quorum/src/portable_receipt.py
+      - name: Execute serialized producer receipt through hold compiler
+        run: python scripts/operate_quorum_bridge.py --quorum-repo /tmp/mission-thread-quorum
