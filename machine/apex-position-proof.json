@@ -1,7 +1,7 @@
 {
-  "schema": "glaciereq.canonical-position-proof.v1",
+  "schema": "glaciereq.apex-position-proof.v1",
   "repository": "GlacierEQ/spacex-hold-reason-compiler",
-  "gate": "CANONICAL_POSITION_RESOLVED",
+  "gate": "APEX_POSITION_RESOLVED",
   "result": "PASS",
   "tested_source_sha": "1ca96a3ccbeb84b25a90f3b716cd21a5365c1687",
   "workflow": {
@@ -17,9 +17,9 @@
     "unknown subsystem visibility",
     "policy fingerprint binding",
     "complete machine-brief fingerprint",
-    "canonical role and no-clearance-authority boundary"
+    "apex role and no-clearance-authority boundary"
   ],
-  "canonical_role": "CANONICAL_SPECIALIST:deterministic_structured_hold_explanation",
+  "apex_role": "APEX_SPECIALIST:deterministic_structured_hold_explanation",
   "limitations": [
     "does not authenticate upstream residuals",
     "does not decide or clear mission holds",

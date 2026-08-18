@@ -9,7 +9,7 @@
     "implemented": true,
     "tested": true,
     "deployed": false,
-    "canonical_position_pending_exact_head_proof": false
+    "apex_position_pending_exact_head_proof": false
   },
   "target": {
     "purpose": "Compile supplied hold residuals into one deterministic, policy-bound human+machine explanation without losing codes, ownership, severity, tied details, or unknown subsystems.",
@@ -46,7 +46,7 @@
     ]
   },
   "promotion": {
-    "required_tests": ["python-unit", "python-adversarial", "canonical-position"],
+    "required_tests": ["python-unit", "python-adversarial", "apex-position"],
     "require_exact_source_sha": true,
     "require_receipt": true,
     "require_nonclaims": true,

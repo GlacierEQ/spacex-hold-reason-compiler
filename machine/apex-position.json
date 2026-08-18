@@ -1,10 +1,10 @@
 {
-  "schema": "glaciereq.repo-canonical-position.v1",
+  "schema": "glaciereq.repo-apex-position.v1",
   "repository": "GlacierEQ/spacex-hold-reason-compiler",
   "position_state": "RESOLVED",
-  "role": "CANONICAL_SPECIALIST",
+  "role": "APEX_SPECIALIST",
   "company_target": "SpaceX",
-  "canonical_identity": "hold-reason-compiler",
+  "apex_identity": "hold-reason-compiler",
   "owns": "deterministic_structured_hold_explanation",
   "unique_value": [
     "explicit subsystem residuals compile into one deterministic human+machine hold brief",
@@ -31,7 +31,7 @@
       "machine_safe_hold_identity_validation",
       "complete_hold_brief_receipt"
     ],
-    "ownership": "Canonical SpaceX-lens specialist for deterministic structured hold explanation, separate from mission decision authority."
+    "ownership": "APEX SpaceX-lens specialist for deterministic structured hold explanation, separate from mission decision authority."
   },
   "relationships": [
     {
